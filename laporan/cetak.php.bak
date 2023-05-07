@@ -1,0 +1,260 @@
+<?php
+session_start();
+include '../include/koneksi.php';
+require("fpdf.php");
+//memulai pengaturan output PDF
+class PDF extends FPDF
+{
+//untuk pengaturan header halaman
+	function Header()
+	{
+		$this->Image('awal.jpg',2.9,0.6,1.8,2.5);	
+		$this->SetY(1);
+		$this->SetFont('Times','',13);		
+		$this->Cell(4,0.5,'',0,0,'L');				
+		$this->Cell(15,0.5,'PANITIA PEMILIHAN',0,0,'L'); 		
+		$this->Ln();
+		$this->Cell(4,0.5,'',0,0,'L');				
+		$this->Cell(15,0.5,'ANGGOTA PIMPINAN DAERAH MUHAMMADIYAH GRESIK',0,0,'L');				
+		$this->Ln();
+		$this->Cell(4,0.5,'',0,0,'L');				
+		$this->Cell(15,0.5,'PERIODE 2010 – 2015',0,0,'L');				
+		$this->Ln();
+		$this->Cell(4,0.5,'',0,0,'L');				
+		$this->Cell(15,0.5,'Jl. Jawa No. 30 Gresik Kota Baru, Telp. 031 3952484/ 3970707, Fax. 031 3952484',0,0,'L');				
+		$this->Ln();
+		$this->Cell(8,0.5,'==================================================================================================',0,0,'L');				
+		$this->Ln();
+	}
+	function Footer()
+	{
+		$this->Ln();
+		$this->SetY(-1.5);
+		$this->SetFont('Arial','B',7);
+		$this->Cell(0,0.3,$this->PageNo().'/{nb}',0,0,'R');
+	}
+}
+
+//pengaturan ukuran kertas P = Portrait
+$pdf = new PDF('P','cm','folio');
+$pdf->Open();
+$pdf->AliasNbPages();
+$pdf->AddPage();
+
+
+$pdf->Ln();
+$pdf->SetFont('Arial','B',13);
+$pdf->Cell(19,0.5,'BERITA ACARA HASIL PEMILIHAN','',0,'C');
+$pdf->Ln();
+$pdf->Cell(19,0.5,'PIMPINAN DAERAH MUHAMMADIYAH KABUPATEN GRESIK','',0,'C');
+$pdf->Ln();
+$pdf->Cell(19,0.5,'PERIODE 2010-2015','',0,'C');
+$pdf->Ln();
+$pdf->Image('bismillah.jpg',7.5,5.8,6.1,1.0);	
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->SetFont('Times','',11);		
+$pdf->MultiCell(0,0.5,'Pada hari ini Ahad tanggal 9 Robiul awal 1432 H., bertepatan dengan tanggal 13 Februari 2011 M, pukul 08:00 WIB sampai dengan 17:00 WIB bertempat di Universitas Muhammadiyah Gresik, telah dilaksanakan pemilihan Pimpinan Daerah Muhammadiyah Periode 2010-2015, dengan hasil sebagai berikut :',0,'J');
+
+
+$total = 0;
+$sqldua = "SELECT COUNT(DISTINCT a.pemilih_id) AS total FROM t_pemilihan A,m_pemilih b,m_ketetapan c
+WHERE a.pemilih_id=b.pemilih_id AND b.ketetapan_id=c.ketetapan_id AND c.dewan_id='".$_SESSION['proses_pemilihan']."'";
+$esqldua=mysql_query($sqldua);
+while ($dsqldua = mysql_fetch_array ($esqldua)) {
+	$total = $dsqldua['total'];
+}
+
+$sah = 0;
+$sqldua = "SELECT COUNT(DISTINCT a.pemilih_id) AS total FROM t_pemilihan A,m_pemilih b,m_ketetapan c
+WHERE a.pemilih_id=b.pemilih_id AND b.ketetapan_id=c.ketetapan_id AND c.dewan_id='".$_SESSION['proses_pemilihan']."' and a.calon_id <> '73'";
+$esqldua=mysql_query($sqldua);
+while ($dsqldua = mysql_fetch_array ($esqldua)) {
+	$sah = $dsqldua['total'];
+}
+
+$abstain = 0;
+$sqldua = "SELECT COUNT(DISTINCT a.pemilih_id) AS total FROM t_pemilihan A,m_pemilih b,m_ketetapan c
+WHERE a.pemilih_id=b.pemilih_id AND b.ketetapan_id=c.ketetapan_id AND c.dewan_id='".$_SESSION['proses_pemilihan']."' and a.calon_id = '73'";
+$esqldua=mysql_query($sqldua);
+while ($dsqldua = mysql_fetch_array ($esqldua)) {
+	$abstain = $dsqldua['total'];
+}
+
+$pdf->Ln();
+$pdf->SetFont('Times','B',11);		
+$pdf->Cell(0.5,0.5,'I','',0,'L');
+$pdf->Cell(18,0.5,'Rekap Pemilihan','',0,'L');
+$pdf->Ln();
+$pdf->SetFont('Times','',11);		
+$pdf->Cell(0.5,0.5,'','',0,'L');
+$pdf->Cell(5,0.5,'Total pemilih','',0,'L');
+$pdf->Cell(0.5,0.5,':','',0,'C');
+$pdf->Cell(2,0.5,$total,'',0,'C');
+$pdf->Cell(10,0.5,' Orang','',0,'L');
+$pdf->Ln();
+$pdf->Cell(0.5,0.5,'','',0,'L');
+$pdf->Cell(5,0.5,'Jumlah Pemilih sah','',0,'L');
+$pdf->Cell(0.5,0.5,':','',0,'C');
+$pdf->Cell(2,0.5,$sah,'',0,'C');
+$pdf->Cell(10,0.5,' Orang','',0,'L');
+$pdf->Ln();
+$pdf->Cell(0.5,0.5,'','',0,'L');
+$pdf->Cell(5,0.5,'Jumlah abstain','',0,'L');
+$pdf->Cell(0.5,0.5,':','',0,'C');
+$pdf->Cell(2,0.5,$abstain,'',0,'C');
+$pdf->Cell(10,0.5,' Orang','',0,'L');
+$pdf->Ln();
+
+$pdf->Ln();
+$pdf->SetFont('Times','B',11);		
+$pdf->Cell(0.5,0.5,'II','',0,'L');
+$pdf->Cell(18,0.5,'Rekap Perolehan Suara','',0,'L');
+$pdf->SetFont('Times','',11);		
+$pdf->Cell(0.5,0.5,'','',0,'L');
+
+$pdf->Ln();
+$pdf->SetFont('Times','',11);		
+$pdf->Cell(0.5,0.5,'','',0,'L');
+$pdf->Cell(0.8,0.5,'NO','LBRT',0,'L');
+$pdf->Cell(14,0.5,'NAMA CALON PIMPINAN','LBRT',0,'L');
+$pdf->Cell(4,0.5,'PEROLEHAN SUARA','LBRT',0,'L');
+$pdf->Ln();
+
+
+
+$sqlsatu	= "SELECT ketetapan_jumlah,ketetapan_id,ketetapan_calon FROM m_ketetapan where ketetapan_status='1' and dewan_id='".$_SESSION['proses_pemilihan']."'";
+$esqlsatu	= mysql_query($sqlsatu);
+$dsqlsatu	= mysql_fetch_array ($esqlsatu);
+$awal		= $dsqlsatu[ketetapan_jumlah];
+$tetap		= $dsqlsatu[ketetapan_id];
+$calon		= $dsqlsatu[ketetapan_calon];
+$limit = "limit 0,$awal";
+$Qcekdata = "SELECT B.calon_urut,B.calon_nama,(SELECT COUNT(*) FROM t_pemilihan WHERE calon_id=B.calon_id) AS nilai FROM m_calon B where B.calon_status='1' and ketetapan_id='$tetap' ORDER BY nilai DESC,calon_urut  $limit";
+$Ecekdata = mysql_query($Qcekdata);
+$a=1;
+while($Dcekdata = mysql_fetch_array ($Ecekdata))
+{
+	$pdf->SetFont('Times','',10);		
+	$pdf->Cell(0.5,0.5,'','',0,'L');
+	$pdf->Cell(0.8,0.5,$a,'LBRT',0,'C');
+	$pdf->Cell(14,0.5,$Dcekdata['calon_nama'],'LBRT',0,'L');
+	$pdf->Cell(4,0.5,$Dcekdata['nilai'],'LBRT',0,'C');
+	$pdf->Ln();
+	$a++;
+}
+
+
+$pdf->Ln();
+$pdf->SetFont('Times','B',11);		
+$pdf->Cell(0.5,0.5,'III','',0,'L');
+$pdf->Cell(18,0.5,' '.$calon.' Nama Pimpinan Daerah Muhammadiyah periode 2010-2015  :','',0,'L');
+
+$pdf->SetFont('Times','',11);		
+$pdf->Cell(0.5,0.5,'','',0,'L');
+$pdf->Ln();
+$pdf->SetFont('Times','',11);		
+$pdf->Cell(0.5,0.5,'','',0,'L');
+$pdf->Cell(0.8,0.5,'NO','LBRT',0,'L');
+$pdf->Cell(14,0.5,'NAMA CALON PIMPINAN','LBRT',0,'L');
+$pdf->Cell(4,0.5,'PEROLEHAN SUARA','LBRT',0,'L');
+$pdf->Ln();
+
+
+
+$limit2 = "limit 0,$calon";
+$Qcekdata = "SELECT B.calon_urut,B.calon_nama,(SELECT COUNT(*) FROM t_pemilihan WHERE calon_id=B.calon_id) AS nilai FROM m_calon B where B.calon_status='1' and ketetapan_id='$tetap' ORDER BY nilai DESC,calon_urut  $limit2";
+$Ecekdata = mysql_query($Qcekdata);
+$a=1;
+while($Dcekdata = mysql_fetch_array ($Ecekdata))
+{
+	$pdf->SetFont('Times','',10);		
+	$pdf->Cell(0.5,0.5,'','',0,'L');
+	$pdf->Cell(0.8,0.5,$a,'LBRT',0,'C');
+	$pdf->Cell(14,0.5,$Dcekdata['calon_nama'],'LBRT',0,'L');
+	$pdf->Cell(4,0.5,$Dcekdata['nilai'],'LBRT',0,'C');
+	$pdf->Ln();
+	$a++;
+}
+
+$pdf->Ln();
+$pdf->Cell(10.5,0.5,'','',0,'L');
+$pdf->Cell(7,0.5,'Gresik, 9 Robiulawal 1432 H','',0,'R');
+$pdf->Ln();
+$pdf->Cell(10.5,0.5,'','',0,'L');
+$pdf->Cell(7,0.5,'13  Februari  2011 M','',0,'R');
+$pdf->Ln();
+
+
+$pdf->Ln();
+$pdf->SetFont('Times','B',11);		
+$pdf->Cell(0.5,0.5,'','',0,'L');
+$pdf->Cell(18,0.5,'Panitia Pemilihan :','',0,'L');
+$pdf->Ln();
+$pdf->SetFont('Times','',10);		
+$pdf->Cell(0.5,0.9,'','',0,'L');
+$pdf->Cell(3.5,0.9,'Ketua','',0,'L');
+$pdf->Cell(0.5,0.9,':','',0,'C');
+$pdf->Cell(8,0.9,'H. Mahfudl Asyrofi, , S.Ag., M.Si.','',0,'L');
+$pdf->Cell(8,0.9,'...............................................................','',0,'L');
+
+
+$pdf->Ln();
+$pdf->Cell(0.5,0.9,'','',0,'L');
+$pdf->Cell(3.5,0.9,'Sekretaris','',0,'L');
+$pdf->Cell(0.5,0.9,':','',0,'C');
+$pdf->Cell(8,0.9,'Muhammad Harun R, SE.','',0,'L');
+$pdf->Cell(8,0.9,'...............................................................','',0,'L');
+
+
+
+$pdf->Ln();
+$pdf->Cell(0.5,0.9,'','',0,'L');
+$pdf->Cell(3.5,0.9,'Anggota','',0,'L');
+$pdf->Cell(0.5,0.9,':','',0,'C');
+$pdf->Cell(8,0.9,'1. Drs. H. Achmad Muhadjir','',0,'L');
+$pdf->Cell(8,0.9,'...............................................................','',0,'L');
+
+
+$pdf->Ln();
+$pdf->Cell(0.5,0.9,'','',0,'L');
+$pdf->Cell(3.5,0.9,'','',0,'L');
+$pdf->Cell(0.5,0.9,'','',0,'C');
+$pdf->Cell(8,0.9,'2. M. Thoha Mahsun, S.Ag. ','',0,'L');
+$pdf->Cell(8,0.9,'...............................................................','',0,'L');
+
+$pdf->Ln();
+$pdf->Cell(0.5,0.9,'','',0,'L');
+$pdf->Cell(3.5,0.9,'','',0,'L');
+$pdf->Cell(0.5,0.9,'','',0,'C');
+$pdf->Cell(8,0.9,'3. Anas Thohir, S.Ag. ','',0,'L');
+$pdf->Cell(8,0.9,'...............................................................','',0,'L');
+
+$pdf->Ln();
+$pdf->Cell(0.5,0.9,'','',0,'L');
+$pdf->Cell(3.5,0.9,'','',0,'L');
+$pdf->Cell(0.5,0.9,'','',0,'C');
+$pdf->Cell(8,0.9,'4. Ibnu Chazm, S.Ag. ','',0,'L');
+$pdf->Cell(8,0.9,'...............................................................','',0,'L');
+
+
+$pdf->Ln();
+$pdf->Cell(0.5,0.9,'','',0,'L');
+$pdf->Cell(3.5,0.9,'','',0,'L');
+$pdf->Cell(0.5,0.9,'','',0,'C');
+$pdf->Cell(8,0.9,'5. Drs. A. Mudhofar, M.M.Pd. ','',0,'L');
+$pdf->Cell(8,0.9,'...............................................................','',0,'L');
+
+
+$pdf->Ln();
+$pdf->Cell(0.5,0.8,'','',0,'L');
+$pdf->Cell(3.5,0.8,'','',0,'L');
+$pdf->Cell(0.5,0.8,'','',0,'C');
+$pdf->Cell(8,0.8,'6. Drs. Ir. H. Rudy Wahyu Finansyah, MT. ','',0,'L');
+$pdf->Cell(8,0.8,'...............................................................','',0,'L');
+
+
+//menampilkan output berupa halaman PDF
+$pdf->Output();
+?>

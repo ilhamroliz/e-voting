@@ -1,0 +1,16 @@
+<script>
+function cetak()
+{
+	jam1 = document.getElementById('jam1').value;
+	jam2 = document.getElementById('jam2').value;
+	if(jam1=="" || jam2=="") { alert('Maaf tentukan jam pelaksanaan.'); return false;}
+	else
+	{
+		window.open('laporan/cetak.php?jam1='+jam1+'&jam2='+jam2,'Berita Acara');
+	}
+}
+</script>
+
+Pada hari ini Ahad tanggal 9 Roabiul awal 1432 H., bertepatan dengan tanggal 13 Februari 2011 M, pukul <input type='text' maxlength='5' size='4' id='jam1'> WIB sampai dengan <input type='text' maxlength='5' size='4' id='jam2'> WIB bertempat di Universitas Muhammadiyah Gresik, telah dilaksanakan pemilihan Pimpinan Daerah Muhammadiyah Periode 2010-2015<br><br>
+
+<a href='javascript:void(0)' onclick="return cetak();"><img src='gambar/printer.gif'></a>

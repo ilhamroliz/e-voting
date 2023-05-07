@@ -1,0 +1,334 @@
+<?php
+ob_start();
+include("inc/validasi_hal_admin.php");
+include("inc/commonfunctions.php");
+date_default_timezone_set("Asia/Jakarta");
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+	<title>E-Voting Pimpinan Ranting Muhammadiyah | Dukun Gresik</title>
+	<link rel="stylesheet" type="text/css" href="inc/style.css">
+	<link rel="icon" type="image/x-icon" href="images_admin/muh.ico" />
+	<script type='text/javascript' src='inc/jquery.js'></script>
+	<script type="text/javascript" src="inc/jquery.datePicker.js"></script>
+	<script type="text/javascript" src="inc/jquery.metadata.js"></script>
+	<script type="text/javascript" src="inc/jquery.validate.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/manager.css" /> 
+	<script type="text/javascript">
+		function myload(){
+			$().ajaxSend(function(r,s){
+				$("#contentLoading").show();
+			});  
+			$().ajaxStop(function(r,s){  
+				$("#contentLoading").fadeOut("fast");
+			});  
+		}
+
+		$(function(){
+			myload();
+			$("#home").click(function(){
+				$.get(
+					"welcome.php", 
+					function(data) {
+						$('#isi_halaman').html(data);
+					}
+				);
+			});
+
+			$("#ketetapan").click(function(){
+				$.get(
+					"m_ketetapan.php", 
+					function(data) {
+						$('#isi_halaman').html(data);
+					}
+				);
+			});
+
+			$("#pemilih").click(function(){
+				$.get(
+					"m_pemilih.php", 
+					function(data) {
+						$('#isi_halaman').html(data);
+					}
+				);
+			});
+
+			$("#calon").click(function(){
+				$.get(
+					"photo-manager.php", 
+					function(data) {
+						$('#isi_halaman').html(data);
+					}
+				);
+			});
+
+			$("#grafik").click(function(){
+				$.get(
+					"grafik.php", 
+					function(data) {
+						$('#isi_halaman').html(data);
+					}
+				);
+			});
+
+			$("#hasil").click(function(){
+				$.get(
+					"hasil.php", 
+					function(data) {
+						$('#isi_halaman').html(data);
+					}
+				);
+			});
+
+			$("#barcode").click(function(){
+				$.get(
+					"barcode.php", 
+					function(data) {
+						$('#isi_halaman').html(data);
+					}
+				);
+			});
+			$("#acara").click(function(){
+				$.get(
+					"acara.php", 
+					function(data) {
+						$('#isi_halaman').html(data);
+					}
+				);
+			});
+
+			$("#isi_halaman").load("welcome.php");
+		});
+
+
+	</script>
+	<script type="text/javascript">
+		/***********************************************
+		* Local Time script- � Dynamic Drive (http://www.dynamicdrive.com)
+		* This notice MUST stay intact for legal use
+		* Visit http://www.dynamicdrive.com/ for this script and 100s more.
+		***********************************************/
+		var weekdaystxt=["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
+		function showLocalTime(container, servermode, offsetMinutes, displayversion){
+			if (!document.getElementById || !document.getElementById(container)) return
+			this.container=document.getElementById(container)
+			this.displayversion=displayversion
+			var servertimestring=(servermode=="server-php")? '<? print date("F d, Y H:i:s", time())?>' : (servermode=="server-ssi")? '<!--#config timefmt="%B %d, %Y %H:%M:%S"--><!--#echo var="DATE_LOCAL" -->' : '<%= Now() %>'
+			this.localtime=this.serverdate=new Date(servertimestring)
+			this.localtime.setTime(this.serverdate.getTime()+offsetMinutes*60*1000) //add user offset to server time
+			this.updateTime()
+			this.updateContainer()
+		}
+		showLocalTime.prototype.updateTime=function(){
+			var thisobj=this
+			this.localtime.setSeconds(this.localtime.getSeconds()+1)
+			setTimeout(function(){thisobj.updateTime()}, 1000) //update time every second
+		}
+		showLocalTime.prototype.updateContainer=function(){
+			var thisobj=this
+			if (this.displayversion=="long")
+				this.container.innerHTML=this.localtime.toLocaleString()
+			else{
+				var hour=this.localtime.getHours()
+				var minutes=this.localtime.getMinutes()
+				var seconds=this.localtime.getSeconds()
+				var ampm=(hour>=12)? "PM" : "AM"
+				var dayofweek=weekdaystxt[this.localtime.getDay()]
+				this.container.innerHTML=formatField(hour, 1)+":"+formatField(minutes)+":"+formatField(seconds)+" "+ampm+""
+			}
+			setTimeout(function(){thisobj.updateContainer()}, 1000) //update container every second
+		}
+		function formatField(num, isHour){
+			if (typeof isHour!="undefined"){ //if this is the hour field
+				var hour=(num>12)? num-12 : num
+				return (hour==0)? 12 : hour
+			}
+			return (num<=9)? "0"+num : num//if this is minute or sec field
+		}
+	</script>
+
+</head>
+<body>
+<table class="wrapper" align="center" cellpadding="0" cellspacing="0">
+	<tbody>
+		<!--
+		<tr>
+			<td>
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<tbody>
+						<tr>
+							<td style="background: transparent url(images_admin/kepala.png) repeat-x scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="100%" height="122">
+								<table width="100%" border="0">
+									<tr>
+										<td width="160" align="center">
+											<img src="images_admin/logo.png" border="0" title="Logo Muhammadiyah">
+										</td>
+										<td>
+											<span id="judul_atas">E-Voting <? echo cari_nilaitabel("dewan_nama","dewan_id='".$_SESSION['proses_pemilihan']."'","m_dewan",$conn);?> | Kabupaten Gresik</span>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		-->
+		<tr>
+			<td>
+				<table style="border-bottom: 1px solid rgb(204, 204, 204); background: rgb(239, 239, 239) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="100%" cellpadding="0" cellspacing="0" border='0'>
+					<tbody>
+						<tr>
+							<td height="30" align="left" NoWrap  width='10%'>&nbsp;<b>Login sebagai : </b><a href="inc/logout.php" ><? echo cari_nilaitabel("user_nama","user_id='".$_SESSION['iduser_web']."' and dewan_id='".$_SESSION['proses_pemilihan']."'","m_user",$conn);?></a> | 
+							<b>Group User : </b><? echo cari_nilaitabel("group_nama","group_id='".$_SESSION['groupuser_web']."'","m_group",$conn);?> 	</td>
+							<td width='10%' NoWrap>
+							<?
+								if($_GET['keluar']=='ok')
+								{
+									Session_unregister('pemilih_nama');
+								}
+								if($_POST['datapemilih']!="")
+								{
+									$ada = cari_nilaitabel("pemilih_id","pemilih_id='".$_POST['datapemilih']."' and ketetapan_id=(select ketetapan_id from m_ketetapan where dewan_id='".$_SESSION['proses_pemilihan']."' and ketetapan_status='1') and pemilih_id not in (select distinct pemilih_id from t_pemilihan) and pemilih_status='1'","m_pemilih",$conn);
+									if($ada!="")
+									{
+										session_register('pemilih_nama');
+										$_SESSION['pemilih_nama'] = $ada;
+										session_register('CALON_register');
+										$_SESSION[CALON_register] = array();
+									} else
+									{
+										header("Location:main.php");
+									}
+								}
+
+								if($_SESSION['groupuser_web']!='1')
+								{
+									if($_SESSION['pemilih_nama']=="")
+									{
+										echo "
+										<form id='form' method='POST' action='main.php' autocomplete='off' onsubmit=\"return cek_pemilih();\">
+											&nbsp;| <b>Pemilih : </b> 
+											<input type='text' id='datapemilih' name='datapemilih' value=''>
+											<input type='submit' value='Proses'>
+										</form>
+										<script>
+										document.getElementById(\"datapemilih\").focus();
+										function cek_pemilih()
+										{
+											data = document.getElementById(\"datapemilih\").value;
+											if(data=='')
+											{
+												alert('Harap isi data pemilih.'); 
+												return false; 
+												document.getElementById(\"datapemilih\").focus(); 
+											} 
+											else
+											{
+												return true;
+											}
+
+										}
+										</script>
+										";
+									} else
+									{
+										echo "&nbsp;| <b>Pemilih : ".$_SESSION['pemilih_nama']."</b>
+										";
+									}
+								}
+							?>
+								<input type='hidden' id='kodepemilih' name='kodepemilih' value='<?=$_SESSION['pemilih_nama'];?>'>
+							</td>
+							<td align="right" height="30" style="padding-right:5px;">
+								<b>Hari ini : </b><? tanggalan(date("w"),date("d"),date("m"),date("Y"));?> |
+								<b>Jam Server Saat Ini : </b><span id="timecontainer"></span>
+								<script type="text/javascript">
+									new showLocalTime("timecontainer", "server-php", 0, "short")
+								</script>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+				<div id="isi">
+					<table width="100%" cellpadding="0" cellspacing="0" border="0">
+						<tbody>
+							<tr>
+								<?
+								if($_SESSION['groupuser_web']=='1')
+								{
+									?>
+									<td style="padding-bottom: 20px;padding-left: 5px;" valign="top" width="170">
+									<a href='javascript:void(0)' id='ketetapan'>KETETAPAN</a><br>
+									<a href='javascript:void(0)' id='pemilih'>DATA PEMILIH</a><br>
+									<a href='javascript:void(0)' id='calon'>DATA CALON</a><br>
+									<a href='javascript:void(0)' id='barcode'>CETAK BARCODE</a><br>
+									<a href='javascript:void(0)' id='grafik'>STATISTIK PEMILIHAN</a><br>
+									<a href='javascript:void(0)' id='hasil'>HASIL PEMILIHAN</a><br>
+									<a href='javascript:void(0)' id='acara'>BERITA ACARA</a><br>
+									</td>
+									<td style="padding-left: 20px; padding-bottom: 20px;" valign="top">
+									<?
+								} else
+								{
+								?>
+									<td style="padding-left: 5px; padding-bottom: 20px;" valign="top">
+								<?
+								}
+								
+								?>
+									<!-- Start Content Admin -->
+									<div id="contentLoading" class='content_loader'>
+										<img src='images_admin/ajax-loader.gif' height='19' width='220' alt='Loading...'>
+									</div>
+									<div id='isi_halaman'>
+									</div>
+									<!-- End Content Admin -->
+								</td>
+							</tr>
+							<?
+							if($_SESSION['groupuser_web']=='1')
+							{
+								?>
+								<tr>
+									<td colspan="2" align="right" style="padding-right:10px;">
+										<input type="button" value="Log Out" class="button-primary" OnClick="location.href='inc/logout.php'">
+									</td>
+								</tr>
+							<?
+							}
+							?>
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<!--
+		<tr>
+			<td height="1">
+				<table style="border-top: 1px solid rgb(204, 204, 204); background: rgb(239, 239, 239) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" width="100%" cellpadding="0" cellspacing="0">
+					<tbody>
+						<tr>
+							<td width="100%" align="right" style="padding-right:5px;">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			   <center>
+				   Copyright &copy; 2016 - Pimpinan Ranting Muhammadiyah Dukun <br />Best Viewed : </b> 1024 x 768 pixel @ Mozilla Firefox
+			   </center>
+			</td>
+		</tr>
+		-->
+	</tbody>
+</table>
+</body>
+</html>

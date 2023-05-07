@@ -1,0 +1,16 @@
+html, body {
+	color: #660000;
+	font-size: 12px;
+	font-family: 'Tahoma';
+	margin:0;
+	padding:0;
+	height:100%;
+}
+
+
+
+a {
+	text-decoration: none;
+	color:#000000;
+}
+

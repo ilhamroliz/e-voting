@@ -1,0 +1,224 @@
+body {
+	background: #ffffff url("../images_admin/aa.jpg") repeat-x;
+	margin: 0px;
+}
+
+
+body,td,input,select,textarea {
+	font-family: Tahoma;
+	font-size: 11px;
+}
+
+a {
+	font-size: 11;
+	text-decoration: none;
+	font-family: Tahoma, Verdana, Arial, Helvetica;
+}
+a:hover {
+	font-size: 11;
+	text-decoration: underline;
+	font-family: Tahoma, Verdana, Arial, Helvetica;
+}
+.menuweb {
+	margin-bottom: 0; 
+	margin-top: 0; 
+	font-size: 11; 
+	color: #000000; 
+	text-decoration: none;
+	font-family: Tahoma, Verdana, Arial, Helvetica;
+}
+
+.menuweb:hover {
+	margin-bottom: 0; 
+	margin-top: 0; 
+	font-size: 11; 
+	color: #000000; 
+	text-decoration: underline;
+	font-family: Tahoma, Verdana, Arial, Helvetica;
+}
+
+table.wrapper {
+	width: 950px;
+}
+
+table.clientlinks {
+	background:#e0e0e0;
+}
+
+td.clientlinks {
+	background:#f9f9f9;
+	width:25%;
+	text-align:center;
+	padding: 6px;
+}
+
+.navboxlinks {
+    background-color: #ffffff;
+    padding: 5px;
+}
+
+.navboxlinks td {
+    border-bottom: 1px dotted #cccccc;
+}
+
+.navbox {
+    background-color: #f7f7f7;
+    border: 1px dotted #cccccc;
+    padding: 5px;
+}
+
+.navinput {
+    border: 1px solid #cccccc;
+    width: 95px;
+}
+
+.submitbutton {
+    color: #ffffff;
+    cursor: pointer;
+    cursor: hand;
+    font-weight: bold;
+	height:23px;
+	vertical-align:middle;
+    background-color: #3A6897;
+    border: 1px solid #3A6897;
+}
+
+.footerbar {
+    background-color: #3A6897;
+    color: #ffffff;
+    padding: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.clientarealinks a {
+	color: #555555;
+}
+
+table.frame {
+	width: 98%;
+	border: 1px solid #3A6897;
+	padding: 0px;
+}
+
+.fieldarea {
+	background-color: #EFF2F9;
+	text-align: right;
+}
+
+.garis_horiz {
+    border-bottom: 1px dotted #cccccc;
+}
+.garis_horiz_tebal {
+	border-top: 1px solid #3A6897;
+}
+
+.content_loader{
+	position: fixed;
+	top: 0;
+	bottom: 0%;
+	left: 0;
+	right: 0%;
+	/*background-image:url(images_admin/page_bg.gif);*/
+	/*background-color: #EEEEEE;*/
+	/* Mozilla ignores crazy MS image filters, so it will skip the following */
+	background: transparent url(images_admin/50percent.png);
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='images_admin/50percent.png');
+	z-index: 99;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	padding-top: 25px;
+	display: none;
+}
+
+#signupform label.error {
+	float: none;
+	background:url("images_admin/unchecked.gif") no-repeat 2px 0px;
+	padding-left: 16px;
+	padding-bottom: 2px;
+	font-weight: bold;
+	color: #EA5200;
+}
+
+#signupform label.checked {
+	background:url("images_admin/checked.gif") no-repeat 2px 0px;
+}
+
+#signupform .success_msg {
+	float: none;
+	font-weight: bold;
+	color: #0060BF;
+	margin-left: 19px;
+}
+
+#signupform_tambah label.error {
+	float: none;
+	background:url("images_admin/unchecked.gif") no-repeat 2px 0px;
+	padding-left: 16px;
+	padding-bottom: 2px;
+	font-weight: bold;
+	color: #EA5200;
+}
+
+#signupform_tambah label.checked {
+	background:url("images_admin/checked.gif") no-repeat 2px 0px;
+}
+
+#signupform_tambah .success_msg {
+	float: none;
+	font-weight: bold;
+	color: #0060BF;
+	margin-left: 19px;
+}
+
+#signupform_ubah label.error {
+	float: none;
+	background:url("images_admin/unchecked.gif") no-repeat 2px 0px;
+	padding-left: 16px;
+	padding-bottom: 2px;
+	font-weight: bold;
+	color: #EA5200;
+}
+
+#signupform_ubah label.checked {
+	background:url("images_admin/checked.gif") no-repeat 2px 0px;
+}
+
+#signupform_ubah .success_msg {
+	float: none;
+	font-weight: bold;
+	color: #0060BF;
+	margin-left: 19px;
+}
+
+#judul_atas{
+	font-weight:normal;
+	font-size:200%;
+	clear:left;
+	color:#FFFFFF;
+}
+#judul_bawah{
+	font-weight:normal;
+	font-size:150%;
+	clear:left;
+	color:#FFFFFF;
+}
+#isi{
+	margin-left:8px;
+	padding:16px 16px 40px 16px;
+	font-weight:normal;
+	-moz-border-radius:11px;
+	-khtml-border-radius:11px;
+	-webkit-border-radius:11px;
+	border-radius:5px;
+	background:#fff;
+	border:1px solid #e5e5e5;
+	-moz-box-shadow:rgba(200,200,200,1) 0 4px 18px;
+	-webkit-box-shadow:rgba(200,200,200,1) 0 4px 18px;
+	-khtml-box-shadow:rgba(200,200,200,1) 0 4px 18px;
+	box-shadow:rgba(200,200,200,1) 0 4px 18px;
+}
+.button-primary{
+	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;padding:3px 10px;border:none;font-size:12px;font-weight:bold;border-width:1px;border-style:solid;border-color:#21759B;-moz-border-radius:11px;-khtml-border-radius:11px;-webkit-border-radius:11px;border-radius:11px;cursor:pointer;text-decoration:none;margin-top:-3px;color:#fff;background:#21759B;
+}

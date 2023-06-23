@@ -8,7 +8,7 @@ date_default_timezone_set("Asia/Jakarta");
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
-	<title>E-Voting Pimpinan Ranting Muhammadiyah | Dukun Gresik</title>
+	<title>E-Voting Pimpinan Cabang Muhammadiyah | Palang Tuban</title>
 	<link rel="stylesheet" type="text/css" href="inc/style.css">
 	<link rel="icon" type="image/x-icon" href="images_admin/muh.ico" />
 	<script type='text/javascript' src='inc/jquery.js'></script>

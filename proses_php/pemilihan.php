@@ -52,6 +52,7 @@ if ($_GET['tampil']=="sukses"){
 
 if ($_POST){
 	$keterangan=$_POST['keterangan'];
+	
 	if($keterangan=='pilih')
 	{
 		$kode	= $_POST['kode'];

@@ -28,6 +28,7 @@ $code->parse($isi); // Text
 2 - Background color */
 $drawing = new BCGDrawing('', $color_white);
 $drawing->setBarcode($code);
+$drawing->setDPI(300);
 $drawing->draw();
 
 // Header that says it is an image (remove it if you save the barcode to a file)
